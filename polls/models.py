@@ -30,9 +30,9 @@ class Choice(models.Model):
 
 
 class MyPerson(models.Model):
-    email = models.EmailField(max_length=200)
+    email = models.EmailField(max_length=200, unique=True)
     first_name = models.CharField(max_length=200)
     last_name = models.CharField(max_length=200)
 
     def __str__(self):
-        return self.email
+        return self.first_name

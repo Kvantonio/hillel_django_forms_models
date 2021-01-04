@@ -111,18 +111,13 @@ def auth_modelform(request):
 
 
 def output_personal_data_modelform(request, id):  # noqa: A002
-    pn = None
+    pn = get_object_or_404(MyPerson, id=id)
     if request.method == "GET":
-        form = MyPersonModelForm(instance=pn)
-        pn = get_object_or_404(MyPerson, id=id)
+        form = MyPersonModelForm()
     else:
         form = MyPersonModelForm(request.POST, instance=pn)
         if form.is_valid():
-            pn = get_object_or_404(MyPerson, id=id)
-            pn.email = form.cleaned_data['email']
-            pn.first_name = form.cleaned_data['first_name']
-            pn.last_name = form.cleaned_data['last_name']
-            pn.save()
+            form.save()
     return render(
         request,
         "polls/person_res.html",
