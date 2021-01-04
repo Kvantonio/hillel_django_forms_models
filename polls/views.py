@@ -110,7 +110,7 @@ def auth_modelform(request):
     )
 
 
-def output_personal_data_modelform(request, id):
+def output_personal_data_modelform(request, id):  # noqa: A002
     pn = None
     if request.method == "GET":
         form = MyPersonModelForm(instance=pn)
