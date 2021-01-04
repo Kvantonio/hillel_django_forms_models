@@ -1,14 +1,14 @@
 import math
 
 from django.http import HttpResponseRedirect
-from django.shortcuts import Http404, get_object_or_404, render
+from django.shortcuts import Http404, get_object_or_404, redirect, render
 from django.urls import reverse
 from django.utils import timezone
 from django.views import generic
 
-from polls.forms import HypotenuseFrom
+from polls.forms import HypotenuseFrom, MyPersonModelForm
 
-from .models import Choice, Question
+from .models import Choice, MyPerson, Question
 
 
 class IndexView(generic.ListView):
@@ -87,5 +87,47 @@ def hypotenuse_form(request):
         context={
             "form": form,
             "gip": gip
+        }
+    )
+
+
+def auth_modelform(request):
+    person_new = None
+    if request.method == "GET":
+        form = MyPersonModelForm(instance=person_new)
+    else:
+        form = MyPersonModelForm(request.POST, instance=person_new)
+        if form.is_valid():
+            person_new = form.save()
+            return redirect('polls:person')
+    return render(
+        request,
+        "polls/person.html",
+        context={
+            "form": form,
+            "person_new": person_new
+        }
+    )
+
+
+def output_personal_data_modelform(request, id):
+    pn = None
+    if request.method == "GET":
+        form = MyPersonModelForm(instance=pn)
+        pn = get_object_or_404(MyPerson, id=id)
+    else:
+        form = MyPersonModelForm(request.POST, instance=pn)
+        if form.is_valid():
+            pn = get_object_or_404(MyPerson, id=id)
+            pn.email = form.cleaned_data['email']
+            pn.first_name = form.cleaned_data['first_name']
+            pn.last_name = form.cleaned_data['last_name']
+            pn.save()
+    return render(
+        request,
+        "polls/person_res.html",
+        context={
+            "pn": pn,
+            "form": form,
         }
     )

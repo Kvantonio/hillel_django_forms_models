@@ -1,0 +1,14 @@
+{% block content %}
+  <h1>Personal Data</h1>
+    <p>User email: {{ pn.email }}</p>
+    <p>User first name: {{ pn.first_name }}</p>
+    <p>User last name: {{ pn.last_name }}</p>
+    <form method="post">
+    <h1>Update the data</h1>
+        {% csrf_token %}
+        {{ form.as_p }}
+        <div class="form-actions">
+        <button type="submit">Send new data</button>
+        </div>
+    </form>
+{% endblock %}
