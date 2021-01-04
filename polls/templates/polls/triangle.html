@@ -1,0 +1,15 @@
+{% block content %}
+<h3>Hypotenuse calculator</h3>
+<form method="post">
+    {% if gip %}
+        <p>Hypotenuse equals:  {{ gip }}</p>
+    {% else %}
+        {% csrf_token %}
+        {{ form.as_p }}
+        <div class="form-actions">
+            <button type="submit">Send and get answer</button>
+        </div>
+    {% endif %}
+</form>
+{% endblock %}
+
