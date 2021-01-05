@@ -1,7 +1,7 @@
 import math
 
 from django.http import HttpResponseRedirect
-from django.shortcuts import Http404, get_object_or_404, redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
 from django.utils import timezone
 from django.views import generic
@@ -77,10 +77,7 @@ def hypotenuse_form(request):
         if form.is_valid():
             first_leg = form.cleaned_data['first_leg']
             second_leg = form.cleaned_data['second_leg']
-            if first_leg <= 0 or second_leg <= 0:
-                raise Http404('Incorrect data')
-            else:
-                gip = math.sqrt(first_leg ** 2 + second_leg ** 2)
+            gip = math.sqrt(first_leg ** 2 + second_leg ** 2)
     return render(
         request,
         "polls/triangle.html",
@@ -92,20 +89,18 @@ def hypotenuse_form(request):
 
 
 def auth_modelform(request):
-    person_new = None
     if request.method == "GET":
-        form = MyPersonModelForm(instance=person_new)
+        form = MyPersonModelForm()
     else:
-        form = MyPersonModelForm(request.POST, instance=person_new)
+        form = MyPersonModelForm(request.POST)
         if form.is_valid():
-            person_new = form.save()
+            form.save()
             return redirect('polls:person')
     return render(
         request,
         "polls/person.html",
         context={
             "form": form,
-            "person_new": person_new
         }
     )
 
@@ -113,7 +108,7 @@ def auth_modelform(request):
 def output_personal_data_modelform(request, id):  # noqa: A002
     pn = get_object_or_404(MyPerson, id=id)
     if request.method == "GET":
-        form = MyPersonModelForm()
+        form = MyPersonModelForm(instance=pn)
     else:
         form = MyPersonModelForm(request.POST, instance=pn)
         if form.is_valid():

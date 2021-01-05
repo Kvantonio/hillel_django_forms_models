@@ -11,7 +11,7 @@ urlpatterns = [
     path(
         'person/<int:id>/',
         views.output_personal_data_modelform,
-        name='person'
+        name='person_res'
         ),
     path('<int:pk>/', views.DetailView.as_view(), name='detail'),
     path('<int:pk>/results/', views.ResultsView.as_view(), name='results'),
