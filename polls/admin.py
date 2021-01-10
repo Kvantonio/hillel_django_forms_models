@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Choice, Question
+from .models import Choice, Logs, Question
 
 
 class ChoiceInline(admin.TabularInline):
@@ -22,5 +22,13 @@ class QuestionAdmin(admin.ModelAdmin):
     search_fields = ['question_text']
 
 
+class LogModelAdmin(admin.ModelAdmin):
+    list_display = ("path", "method", 'timestamp')
+    fields = ['path', 'method']
+    list_filter = ["method"]
+    search_fields = ['method', 'path', "timestamp"]
+
+
 admin.site.register(Question, QuestionAdmin)
 admin.site.register(Choice)
+admin.site.register(Logs, LogModelAdmin)
