@@ -1,1 +1,1 @@
-# hillel_django_forms_models
+# hillel_django_project
