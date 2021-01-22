@@ -150,4 +150,4 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 SILKY_AUTHORISATION = True
-SILKY_PERMISSIONS = lambda user: user.is_superuser
+SILKY_PERMISSIONS = lambda user: user.is_superuser  # noqa: E731
