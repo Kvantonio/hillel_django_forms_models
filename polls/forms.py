@@ -14,6 +14,12 @@ class HypotenuseFrom(forms.Form):
     second_leg = forms.IntegerField(required=True, validators=[validate_num])
 
 
+class ReminderForm(forms.Form):
+    email = forms.EmailField(required=True)
+    text = forms.CharField(required=False)
+    date = forms.DateTimeField(input_formats=["%H:%M:%S %d-%m-%Y"])
+
+
 class MyPersonModelForm(forms.ModelForm):
     class Meta:
         model = MyPerson

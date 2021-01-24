@@ -7,6 +7,7 @@ app_name = 'polls'
 urlpatterns = [
     path('', views.IndexView.as_view(), name='index'),
     path('triangle/', views.hypotenuse_form, name='triangle'),
+    path('reminder/', views.reminder_form, name='reminder'),
     path('person/', views.auth_modelform, name='person'),
     path(
         'person/<int:id>/',

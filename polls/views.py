@@ -6,9 +6,10 @@ from django.urls import reverse
 from django.utils import timezone
 from django.views import generic
 
-from polls.forms import HypotenuseFrom, MyPersonModelForm
+from polls.forms import HypotenuseFrom, MyPersonModelForm, ReminderForm
 
 from .models import Choice, MyPerson, Question
+from .tasks import send_date_reminder
 
 
 class IndexView(generic.ListView):
@@ -84,6 +85,40 @@ def hypotenuse_form(request):
         context={
             "form": form,
             "gip": gip
+        }
+    )
+
+
+def reminder_form(request):
+    mess = None
+    if request.method == "GET":
+        form = ReminderForm()
+    else:
+        form = ReminderForm(request.POST)
+        if form.is_valid():
+            email = form.cleaned_data['email']
+            text = form.cleaned_data['text']
+            rem_date = form.cleaned_data['date']
+
+            r = rem_date
+            d = timezone.now()
+            kiev_time = 2
+            l_time = ((r.day - d.day) * 86400)\
+                + ((r.hour - (d.hour + kiev_time)) * 3600)\
+                + ((r.minute - d.minute) * 60)\
+                + ((r.second - d.second))
+
+            if (86400*2) > l_time > 0:
+                send_date_reminder.apply_async((email, text), countdown=l_time)
+                mess = "OK"
+            else:
+                mess = 'Time is incorrect'
+    return render(
+        request,
+        "polls/reminder.html",
+        context={
+            "form": form,
+            "mess": mess
         }
     )
 

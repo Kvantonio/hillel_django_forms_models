@@ -41,6 +41,7 @@ INTERNAL_IPS = [
 INSTALLED_APPS = [
     'polls.apps.PollsConfig',
     'django_extensions',
+    'django_celery_results',
     'connections.apps.ConnectionsConfig',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -149,5 +150,15 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# silky
 SILKY_AUTHORISATION = True
 SILKY_PERMISSIONS = lambda user: user.is_superuser  # noqa: E731
+SILKY_PYTHON_PROFILER = True
+
+# celery
+CELERY_TASK_TRACK_STARTED = True
+CELERY_TASK_TIME_LIMIT = 30 * 60
+CELERY_RESULT_BACKEND = 'django-db'
