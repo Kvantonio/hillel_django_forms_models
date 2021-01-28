@@ -32,3 +32,18 @@ class Author(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Author_quote(models.Model):
+    name = models.CharField(max_length=250)
+
+    def __str__(self):
+        return self.name
+
+
+class Quote(models.Model):
+    author = models.ForeignKey(Author_quote, on_delete=models.CASCADE)
+    quote = models.CharField(max_length=500)
+
+    def __str__(self):
+        return self.quote
