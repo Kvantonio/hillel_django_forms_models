@@ -6,7 +6,7 @@
     {% else %}
         {% csrf_token %}
         {{ form.as_p }}
-        <p>hour:minute:second day-month-year</p>
+        <p>minute:hour day-month-year</p>
         <div class="form-actions">
             <button type="submit">Send reminder</button>
         </div>

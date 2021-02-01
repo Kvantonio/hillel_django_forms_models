@@ -90,7 +90,6 @@ def hypotenuse_form(request):
 
 
 def reminder_form(request):
-    mess = None
     if request.method == "GET":
         form = ReminderForm()
     else:
@@ -100,25 +99,13 @@ def reminder_form(request):
             text = form.cleaned_data['text']
             rem_date = form.cleaned_data['date']
 
-            r = rem_date
-            d = timezone.now()
-            kiev_time = 2
-            l_time = ((r.day - d.day) * 86400)\
-                + ((r.hour - (d.hour + kiev_time)) * 3600)\
-                + ((r.minute - d.minute) * 60)\
-                + ((r.second - d.second))
+            send_date_reminder.apply_async((email, text), eta=rem_date)
 
-            if (86400*2) > l_time > 0:
-                send_date_reminder.apply_async((email, text), countdown=l_time)
-                mess = "OK"
-            else:
-                mess = 'Time is incorrect'
     return render(
         request,
         "polls/reminder.html",
         context={
             "form": form,
-            "mess": mess
         }
     )
 

@@ -1,11 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
-<h1>Name list</h1>
-<ul>
-{% for object in object_list %}
-    <li>{{ now|date }} - {{ object.title }} - {{ author|date }}</li>
-{% empty %}
-    <li>No name yet.</li>
-{% endfor %}
-</ul>
+<body>
+<h1 align="center">Book list</h1>
+<table cellpadding="6px" rules="rows">
+    <tr bgcolor="#999">
+        <td><b>Book</b></td><td><b>Author</b></td>
+        <td><b>Publisher</b></td><td><b>Description</b></td>
+    </tr>
+    {% for object in object_list %}
+        <tr>
+            <td> {{ object.title}} </td>
+            <td>
+                {% for i in  object.author_set.all %}
+                    {{ i }}
+                {% endfor %}
+            </td>
+            <td>{{ object.publishing}}</td>
+            <td>{{ object.description }}</td>
+        </tr>
+    {% empty %}
+    <li>No books yet.</li>
+    {% endfor %}
+</table>
+</body>
 </html>

@@ -1,9 +1,9 @@
-from connections.models import Author, Book, Creator
+from connections.models import Book, Creator
 
 from django.contrib.auth.mixins import LoginRequiredMixin
 # from django.urls import reverse_lazy
 from django.http import HttpResponse
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import render
 from django.utils import timezone
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
@@ -65,15 +65,9 @@ class CreatorListView(ListView):
 
 class BookListView(ListView):
     model = Book
-    paginate_by = 100
-
-    def get_context_data(self, **kwargs):
-        # Call the base implementation first to get a context
-        context = super().get_context_data(**kwargs)
-        # Add in the publisher
-        context['title'] = self.book.title
-        return context
+    paginate_by = 1000
 
     def get_queryset(self, **kwargs):
-        self.book = get_object_or_404(Book, title=self.kwargs['title'])
-        return Author.objects.filter(book_id=self.book)
+        return super(BookListView, self).get_queryset()\
+            .select_related('publishing', 'description')\
+            .prefetch_related('author_set')

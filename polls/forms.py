@@ -1,5 +1,9 @@
+from datetime import datetime, timedelta
+
 from django import forms
 from django.core.exceptions import ValidationError
+
+import pytz
 
 from .models import MyPerson
 
@@ -10,7 +14,9 @@ def validate_num(value):
 
 
 def validate_date(value):
-    if value <= 0:
+    err = datetime.now() + timedelta(days=2)
+    utc = pytz.utc
+    if value > utc.localize(err) or value < utc.localize(datetime.now()):
         raise ValidationError('Invalid data')
 
 
@@ -23,8 +29,8 @@ class ReminderForm(forms.Form):
     email = forms.EmailField(required=True)
     text = forms.CharField(required=False)
     date = forms.DateTimeField(
-        input_formats=["%H:%M:%S %d-%m-%Y"],
-        validators=[validate_num]
+        input_formats=["%M:%H %d-%m-%Y"],
+        validators=[validate_date]
     )
 
 
