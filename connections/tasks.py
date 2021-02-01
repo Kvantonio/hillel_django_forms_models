@@ -6,14 +6,14 @@ from django.core.mail import send_mail
 
 import requests
 
-from .models import Author_quote, Quote
+from .models import Creator, Quote
 
 
 @shared_task
 def scrap():
     rec = requests.get('https://quotes.toscrape.com')
     j = 0
-    while(j < 5):
+    while j < 5:
 
         soup = bs(rec.content, features="html.parser")
         data = soup.findAll('div', {"class": "quote"})
@@ -24,12 +24,8 @@ def scrap():
 
             if not Quote.objects.filter(quote=quote):
                 # проверяем нет ли такого автора в базе
-                if not Author_quote.objects.filter(name=author):
-                    au = Author_quote.objects.create(name=author)
-                    Quote.objects.create(quote=quote, author=au)
-                else:
-                    au = Author_quote.objects.get(name=author)
-                    Quote.objects.create(quote=quote, author=au)
+                au, temp = Creator.objects.get_or_create(name=author)
+                Quote.objects.create(quote=quote, creator=au)
                 j += 1
 
             if j >= 5:

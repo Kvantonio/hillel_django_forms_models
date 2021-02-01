@@ -1,9 +1,9 @@
 from django.contrib import admin
 
-from .models import Author_quote, Quote
+from .models import Creator, Quote
 
 
-class Author_quoteAdmin(admin.ModelAdmin):
+class CreatorAdmin(admin.ModelAdmin):
     list_display = ['name']
     search_fields = ['name']
     fields = ['name']
@@ -15,5 +15,5 @@ class QuoteAdmin(admin.ModelAdmin):
     fields = ['quote']
 
 
-admin.site.register(Author_quote, Author_quoteAdmin)
+admin.site.register(Creator, CreatorAdmin)
 admin.site.register(Quote, QuoteAdmin)
