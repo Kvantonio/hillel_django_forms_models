@@ -20,8 +20,8 @@ class Command(BaseCommand):
                 a.save()
                 for _ in range(2):
                     b = Book.objects.create(
-                        title=fake.sentence(nb_words=2,
-                                            variable_nb_words=True),
+                        title=fake.sentence(nb_words=3,
+                                            variable_nb_words=True).replace('.',''),
                         publishing=pub
                     )
                     b.save()

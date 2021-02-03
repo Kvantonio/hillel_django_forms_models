@@ -1,3 +1,5 @@
+from django.views.decorators.cache import cache_page
+
 from django.urls import path
 
 from . import views
@@ -7,7 +9,7 @@ app_name = 'connection'
 urlpatterns = [
     path('', views.index, name='index'),
 
-    path('book/', views.BookListView.as_view(), name='book'),
+    path('book/', cache_page(60)(views.BookListView.as_view()), name='book'),
 
     path('creator/', views.CreatorListView.as_view(), name='creator'),
     path('creator/create/',
