@@ -15,6 +15,7 @@ Django==3.1.4
 django-celery-results==2.0.1
 django-debug-toolbar==3.2
 django-extensions==3.1.0
+django-redis==4.12.1
 django-silk==4.1.0
 Faker==5.0.2
 flake8==3.8.4
@@ -39,6 +40,7 @@ pygraphviz==1.6
 pyparsing==2.4.7
 python-dateutil==2.8.1
 pytz==2020.4
+redis==3.5.3
 requests==2.25.1
 six==1.15.0
 soupsieve==2.1
