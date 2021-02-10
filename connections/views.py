@@ -1,4 +1,4 @@
-from connections.models import Book, Creator
+from connections.models import Book, Creator, Quote
 
 from django.contrib.auth.mixins import LoginRequiredMixin
 # from django.urls import reverse_lazy
@@ -15,7 +15,7 @@ def index(request):
 
 
 def success(request):
-    return render(request, "connections/success.html")
+    return render(request, "../templates/connections/success.html")
 
 
 class CreatorCreate(LoginRequiredMixin, CreateView):
@@ -61,6 +61,13 @@ class CreatorListView(ListView):
         context = super().get_context_data(**kwargs)
         context['now'] = timezone.now()
         return context
+
+
+class QuoteListView(ListView):
+    model = Quote
+
+    def get_queryset(self, **kwargs):
+        return super(QuoteListView, self).get_queryset()
 
 
 class BookListView(ListView):

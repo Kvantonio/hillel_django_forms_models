@@ -1,6 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<body>
+{% extends 'based.html' %}
+{% load connections_extras %}
+
+{% block title %}List books{% endblock %}
+
+{% block content %}
 <h1 align="center">Book list</h1>
 <table cellpadding="6px" rules="rows">
     <tr bgcolor="#999">
@@ -16,11 +19,10 @@
                 {% endfor %}
             </td>
             <td>{{ object.publishing}}</td>
-            <td>{{ object.description }}</td>
+            <td>{{ object.description|no_swear}}</td>
         </tr>
     {% empty %}
     <li>No books yet.</li>
     {% endfor %}
 </table>
-</body>
-</html>
+{% endblock%}

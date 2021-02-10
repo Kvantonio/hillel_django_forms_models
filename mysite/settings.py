@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get("SECRET_KEY", "Go_away_it's_a_secret")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = [
     "localhost",
@@ -40,9 +40,11 @@ INTERNAL_IPS = [
 
 INSTALLED_APPS = [
     'polls.apps.PollsConfig',
+    'connections.apps.ConnectionsConfig',
+    'crispy_forms',
+
     'django_extensions',
     'django_celery_results',
-    'connections.apps.ConnectionsConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -177,3 +179,5 @@ CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TIMEZONE = TIME_ZONE
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'

@@ -1,0 +1,17 @@
+{% extends 'based.html' %}
+{% load connections_extras %}
+{% block title %}Quotes and ***{% endblock %}
+
+{% block content %}
+
+    {% random_quote %}
+
+
+    {% for object in object_list %}
+        <p>{{ object.quote|no_swear}} </p>
+    {% empty %}
+        <li>No text yet.</li>
+    {% endfor %}
+
+
+{% endblock%}

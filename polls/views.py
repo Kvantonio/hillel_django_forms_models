@@ -13,7 +13,7 @@ from .tasks import send_date_reminder
 
 
 class IndexView(generic.ListView):
-    template_name = 'polls/index.html'
+    template_name = '../templates/polls/index.html'
     context_object_name = 'latest_question_list'
 
     def get_queryset(self):
@@ -28,7 +28,7 @@ class IndexView(generic.ListView):
 
 class DetailView(generic.DetailView):
     model = Question
-    template_name = 'polls/detail.html'
+    template_name = '../templates/polls/detail.html'
 
     def get_queryset(self):
         """
@@ -39,7 +39,7 @@ class DetailView(generic.DetailView):
 
 class ResultsView(generic.DetailView):
     model = Question
-    template_name = 'polls/results.html'
+    template_name = '../templates/polls/results.html'
 
     def get_queryset(self):
         """
@@ -54,7 +54,7 @@ def vote(request, question_id):
         selected_choice = question.choice_set.get(pk=request.POST['choice'])
     except (KeyError, Choice.DoesNotExist):
         # Redisplay the question voting form.
-        return render(request, 'polls/detail.html', {
+        return render(request, '../templates/polls/detail.html', {
             'question': question,
             'error_message': "You didn't select a choice.",
         })
@@ -81,7 +81,7 @@ def hypotenuse_form(request):
             gip = math.sqrt(first_leg ** 2 + second_leg ** 2)
     return render(
         request,
-        "polls/triangle.html",
+        "../templates/polls/triangle.html",
         context={
             "form": form,
             "gip": gip
@@ -103,7 +103,7 @@ def reminder_form(request):
 
     return render(
         request,
-        "polls/reminder.html",
+        "../templates/polls/reminder.html",
         context={
             "form": form,
         }
@@ -120,7 +120,7 @@ def auth_modelform(request):
             return redirect('polls:person')
     return render(
         request,
-        "polls/person.html",
+        "../templates/polls/person.html",
         context={
             "form": form,
         }
@@ -137,7 +137,7 @@ def output_personal_data_modelform(request, id):  # noqa: A002
             form.save()
     return render(
         request,
-        "polls/person_res.html",
+        "../templates/polls/person_res.html",
         context={
             "pn": pn,
             "form": form,
