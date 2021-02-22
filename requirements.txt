@@ -18,6 +18,7 @@ django-debug-toolbar==3.2
 django-extensions==3.1.0
 django-redis==4.12.1
 django-silk==4.1.0
+django-widget-tweaks==1.4.8
 Faker==5.0.2
 flake8==3.8.4
 flake8-builtins==1.5.3
@@ -37,7 +38,6 @@ pycodestyle==2.6.0
 pydot==1.4.1
 pyflakes==2.2.0
 Pygments==2.7.4
-pygraphviz==1.6
 pyparsing==2.4.7
 python-dateutil==2.8.1
 pytz==2020.4

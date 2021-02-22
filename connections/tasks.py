@@ -47,3 +47,8 @@ def scrap():
 
         link = find_link.a.get('href')  # если нашли ссылку то берем ее
         rec = requests.get('https://quotes.toscrape.com' + link)
+
+
+@shared_task
+def contact_us(subject, message, email):
+    send_mail(subject, message, email, ['admin@example.com'])

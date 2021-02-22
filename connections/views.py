@@ -1,9 +1,11 @@
+from connections.forms import ContactForm
 from connections.models import Book, Creator, Quote
+from connections.tasks import contact_us
 
 from django.contrib.auth.mixins import LoginRequiredMixin
-# from django.urls import reverse_lazy
-from django.http import HttpResponse
-from django.shortcuts import render
+from django.http import HttpResponse, JsonResponse
+from django.shortcuts import redirect, render
+from django.template.loader import render_to_string
 from django.utils import timezone
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
@@ -78,3 +80,26 @@ class BookListView(ListView):
         return super(BookListView, self).get_queryset()\
             .select_related('publishing', 'description')\
             .prefetch_related('author_set')
+
+
+def contact_form(request):
+    data = dict()
+    if request.method == "GET":
+        form = ContactForm()
+    else:
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            subject = form.cleaned_data['subject']
+            from_email = form.cleaned_data['from_email']
+            message = form.cleaned_data['message']
+            contact_us.delay(subject, message, from_email)
+            return redirect('connection:index')
+        else:
+            data['form_is_valid'] = False
+    context = {'form': form}
+    data['html_form'] = render_to_string(
+        template_name='include/contact.html',
+        context=context,
+        request=request
+    )
+    return JsonResponse(data)

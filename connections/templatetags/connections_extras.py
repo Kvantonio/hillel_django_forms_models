@@ -6,17 +6,19 @@ from connections.models import Quote
 from django import template
 from django.utils.safestring import mark_safe
 
-
 register = template.Library()
 
 
 @register.simple_tag
 def random_quote():
     t = Quote.objects.order_by('?').first()
-    a = ('<h4 align="right">Random quote</h4><p align="right">'
-         + str(t) + '</p><p align="right">'
-         + str(t.creator) + '</p>')
-    return mark_safe(a)
+    if t:
+        a = ('<h4 align="right">Random quote</h4><p align="right">'
+             + str(t) + '</p><p align="right">'
+             + str(t.creator) + '</p>')
+        return mark_safe(a)
+    else:
+        return None
 
 
 @register.filter(name='no_swear')

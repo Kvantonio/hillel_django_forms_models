@@ -9,6 +9,7 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('book/', cache_page(60)(views.BookListView.as_view()), name='book'),
     path('quote/', views.QuoteListView.as_view(), name='quotes'),
+    path('contact/', views.contact_form, name='contact'),
     path('creator/', views.CreatorListView.as_view(), name='creator'),
     path('creator/create/',
          views.CreatorCreate.as_view(),
