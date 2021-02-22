@@ -30,7 +30,8 @@ $(function () {
           $("#contact").modal("hide");
         }
         else {
-          $("#contact.modal-content").html(data.html_form);
+
+          $("#contact .modal-content").html(data.html_form);
         }
       }
     });
