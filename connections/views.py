@@ -5,7 +5,7 @@ from connections.tasks import contact_us
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import JsonResponse
-from django.shortcuts import redirect, render
+from django.shortcuts import render
 from django.template.loader import render_to_string
 from django.utils import timezone
 from django.views.generic.detail import DetailView
@@ -93,11 +93,11 @@ def contact_form(request):
             subject = form.cleaned_data['subject']
             from_email = form.cleaned_data['from_email']
             message = form.cleaned_data['message']
+            data['form_is_valid'] = True
             contact_us.delay(subject, message, from_email)
             messages.add_message(request,
                                  messages.SUCCESS,
                                  'Message sent - SUCCESS')
-            return redirect('connection:index')
         else:
             data['form_is_valid'] = False
     context = {'form': form}

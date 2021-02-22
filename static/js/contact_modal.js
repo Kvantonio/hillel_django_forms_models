@@ -30,7 +30,6 @@ $(function () {
           $("#contact").modal("hide");
         }
         else {
-
           $("#contact .modal-content").html(data.html_form);
         }
       }
@@ -43,6 +42,6 @@ $(function () {
 
   // make contact
   $(".js-contact").click(loadForm);
-  $("#contact").on("submit", ".js-book-create-form", sendForm);
+  $("#contact").on("submit", ".js-contact-form", sendForm);
 
 });
